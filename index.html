@@ -251,7 +251,7 @@ nav.top .wrap{justify-content:space-between;row-gap:4px}.clock{display:block}nav
 <div class="stack">
 <div class="hero-pin"><div class="hero-in">
 <header class="hero" id="top">
-<div class="lr" aria-hidden="true"><img src="https://api.getlayers.ai/storage/v1/object/public/public/assets/lumora-e8b711fc68/hero/after.jpg" alt="" fetchpriority="high"><canvas id="rv"></canvas></div><div class="vig"></div>
+<div class="lr" aria-hidden="true"><canvas id="lb0"></canvas><canvas id="rv"></canvas></div><div class="vig"></div>
 <div class="wm" aria-hidden="true">ISOML</div>
 <div class="wrap pad hgrid">
 <div class="idn">
@@ -395,11 +395,55 @@ const BG=[];/* animated contour canvases: {c,col,cells,el,vis,s} */
 const addBG=(c,col,cells,el)=>{const o={c,col,cells,el:el||c,vis:false,s:fit(c)};BG.push(o);new IntersectionObserver(e=>o.vis=e[0].isIntersecting).observe(o.el);new ResizeObserver(()=>{o.s=fit(c)}).observe(c)};
 addBG($('#pc'),'rgba(9,10,11,.07)',80);addBG($('#fc'),'rgba(255,255,255,.09)',80,$('.ft'));
 /* ---------- hero scan reveal (liquid brush) ---------- */
-const rc=$('#rv');let RS=fit(rc),cover=null,brush=null,pts=[],last=null,idle=999,revImg=null;const RAD=143;
-const buildCover=()=>{RS=fit(rc);if(!revImg||!revImg.naturalWidth)return;const cw=rc.width,ch=rc.height;cover=document.createElement('canvas');cover.width=cw;cover.height=ch;
- const g=cover.getContext('2d'),iw=revImg.naturalWidth,ih=revImg.naturalHeight,sc=Math.max(cw/iw,ch/ih),dw=iw*sc,dh=ih*sc;g.drawImage(revImg,(cw-dw)/2,(ch-dh)/2,dw,dh);
+const rc=$('#rv');let RS=fit(rc),cover=null,brush=null,pts=[],last=null,idle=999;const RAD=143;
+/* emblem: an original shield + padlock + circuit artwork, drawn in two states */
+const emblem=(g,W,H,rev)=>{
+ const mono='"Space Grotesk",monospace';let sd=11;const rnd=()=>(sd=(sd*16807)%2147483647)/2147483647;
+ const bg=g.createLinearGradient(0,0,W,H);
+ if(rev){bg.addColorStop(0,'#04161a');bg.addColorStop(1,'#020507')}else{bg.addColorStop(0,'#f4f7f8');bg.addColorStop(1,'#e3eaed')}
+ g.fillStyle=bg;g.fillRect(0,0,W,H);
+ const wide=W>900,cx=wide?W*.64:W*.5,cy=H*.53,S=Math.min(H*.86,W*(wide?.62:.95));
+ /* background texture: dot grid (calm) or hex dump (revealed) */
+ if(rev){const gl=g.createRadialGradient(cx,cy,0,cx,cy,S*.9);gl.addColorStop(0,'rgba(2,210,227,.28)');gl.addColorStop(1,'rgba(2,210,227,0)');g.fillStyle=gl;g.fillRect(0,0,W,H);
+  g.font=`${Math.max(10,S*.017)|0}px ${mono}`;const hx='0123456789ABCDEF';
+  for(let y=14;y<H;y+=Math.max(16,S*.03))for(let x=8;x<W;x+=Math.max(34,S*.06)){if(rnd()<.45)continue;g.fillStyle=`rgba(2,210,227,${.08+rnd()*.22})`;g.fillText(hx[(rnd()*16)|0]+hx[(rnd()*16)|0],x,y)}
+  g.fillStyle='rgba(0,0,0,.18)';for(let y=0;y<H;y+=3)g.fillRect(0,y,W,1)}
+ else{g.fillStyle='rgba(9,10,11,.07)';for(let y=12;y<H;y+=22)for(let x=12;x<W;x+=22){g.beginPath();g.arc(x,y,1,0,7);g.fill()}}
+ const shield=(k)=>{const s=S*k,w=s*.42,y0=cy-s*.5,y1=cy+s*.55;g.beginPath();g.moveTo(cx,y0);
+  g.bezierCurveTo(cx+w*.5,y0+s*.09,cx+w*.85,y0+s*.05,cx+w,y0+s*.02);g.lineTo(cx+w,cy+s*.05);g.bezierCurveTo(cx+w,cy+s*.33,cx+w*.45,cy+s*.47,cx,y1);
+  g.bezierCurveTo(cx-w*.45,cy+s*.47,cx-w,cy+s*.33,cx-w,cy+s*.05);g.lineTo(cx-w,y0+s*.02);g.bezierCurveTo(cx-w*.85,y0+s*.05,cx-w*.5,y0+s*.09,cx,y0);g.closePath()};
+ /* circuit traces leaving the shield */
+ sd=29;const tr=[];for(let i=0;i<22;i++){const side=i%2?1:-1,yy=cy-S*.36+rnd()*S*.78,x0=cx+side*S*.40*(1-Math.max(0,(yy-cy)/(S*.6))**2);
+  const pts=[[x0,yy]];let x=x0,y=yy;for(let k=0;k<3;k++){x+=side*(S*.06+rnd()*S*.16);pts.push([x,y]);const d=(rnd()-.5)*S*.16;x+=side*Math.abs(d);y+=d;pts.push([x,y])}tr.push(pts)}
+ g.lineCap='round';g.lineJoin='round';
+ tr.forEach((pts,i)=>{const bad=rev&&i%7==3;g.strokeStyle=rev?(bad?'rgba(255,77,67,.9)':'rgba(2,210,227,.85)'):'rgba(9,10,11,.14)';g.lineWidth=rev?2:1.4;
+  if(rev){g.shadowColor=bad?'#ff4d43':'#02d2e3';g.shadowBlur=12}g.beginPath();pts.forEach((p,k)=>k?g.lineTo(...p):g.moveTo(...p));g.stroke();g.shadowBlur=0;
+  const e=pts[pts.length-1];g.beginPath();g.arc(e[0],e[1],rev?4:3,0,7);g.fillStyle=rev?(bad?'#ff4d43':'#02d2e3'):'rgba(9,10,11,.22)';g.fill()});
+ /* shield rings */
+ [1,.86,.72].forEach((k,i)=>{shield(k);g.setLineDash(i==2?[S*.012,S*.012]:[]);
+  if(rev){g.strokeStyle=i==0?'#02d2e3':'rgba(2,210,227,.6)';g.lineWidth=i==0?S*.012:S*.005;g.shadowColor='#02d2e3';g.shadowBlur=i==0?28:10}
+  else{g.strokeStyle=i==0?'rgba(9,10,11,.16)':'rgba(9,10,11,.1)';g.lineWidth=i==0?S*.012:S*.005}
+  g.stroke();g.shadowBlur=0});g.setLineDash([]);
+ if(rev){shield(.86);g.fillStyle='rgba(2,210,227,.07)';g.fill()}
+ /* padlock */
+ const lw=S*.26,lh=S*.2,lx=cx-lw/2,ly=cy-S*.02,r=S*.09,lift=rev?S*.07:0;
+ g.lineWidth=S*.03;g.strokeStyle=rev?'#e9fcff':'rgba(9,10,11,.2)';if(rev){g.shadowColor='#02d2e3';g.shadowBlur=20}
+ g.beginPath();g.moveTo(cx-r,ly-(rev?0:0));g.lineTo(cx-r,ly-S*.03-lift);g.arc(cx,ly-S*.03-lift,r,Math.PI,0);g.lineTo(cx+r,ly-(rev?S*.06:0)-lift*(rev?.3:0));g.stroke();g.shadowBlur=0;
+ g.beginPath();g.roundRect?g.roundRect(lx,ly,lw,lh,S*.02):g.rect(lx,ly,lw,lh);g.fillStyle=rev?'#02d2e3':'rgba(9,10,11,.16)';g.fill();
+ g.fillStyle=rev?'#03161a':'#eef3f5';g.beginPath();g.arc(cx,ly+lh*.42,S*.022,0,7);g.fill();g.fillRect(cx-S*.008,ly+lh*.42,S*.016,lh*.34);
+ /* revealed extras: breach crack + labels */
+ if(rev){g.strokeStyle='#ff4d43';g.lineWidth=S*.006;g.shadowColor='#ff4d43';g.shadowBlur=16;g.beginPath();
+  [[-.30,-.40],[-.18,-.22],[-.24,-.12],[-.08,.04],[-.14,.14],[.02,.34],[-.02,.5]].forEach(([dx,dy],k)=>{const X=cx+dx*S,Y=cy+dy*S;k?g.lineTo(X,Y):g.moveTo(X,Y)});g.stroke();g.shadowBlur=0;
+  const tags=['AES-256','TLS 1.3','MQTT :1883','AE-GRU','IDS ONLINE','UDP FLOOD','99.72%','PORT 23 CLOSED','C2 BLOCKED','ZERO TRUST'];
+  g.font=`500 ${Math.max(11,S*.02)|0}px ${mono}`;tr.forEach((pts,i)=>{if(i>=tags.length)return;const e=pts[pts.length-1],t=tags[i],bad=i%7==3,tw=g.measureText(t).width,side=i%2?1:-1,tx=side>0?e[0]+10:e[0]-10-tw;
+   g.fillStyle='rgba(2,8,10,.8)';g.fillRect(tx-6,e[1]-S*.02,tw+12,S*.032);g.strokeStyle=bad?'#ff4d43':'rgba(2,210,227,.6)';g.lineWidth=1;g.strokeRect(tx-6,e[1]-S*.02,tw+12,S*.032);
+   g.fillStyle=bad?'#ff4d43':'#bff7fd';g.fillText(t,tx,e[1]+S*.004)});
+  g.font=`700 ${Math.max(12,S*.028)|0}px ${mono}`;g.fillStyle='#02d2e3';g.textAlign='center';g.fillText('ACCESS · VERIFIED',cx,cy+S*.62);g.textAlign='start'}};
+const lb0=$('#lb0');
+const buildCover=()=>{RS=fit(rc);const b=fit(lb0);emblem(b.x,b.W,b.H,false);
+ const cw=rc.width,ch=rc.height;cover=document.createElement('canvas');cover.width=cw;cover.height=ch;const g=cover.getContext('2d');g.scale(DPR,DPR);emblem(g,cw/DPR,ch/DPR,true);
  const d=Math.ceil(RAD*DPR*2);brush=document.createElement('canvas');brush.width=brush.height=d};
-if(!RM){revImg=new Image();revImg.crossOrigin='anonymous';revImg.onload=buildCover;revImg.src='https://api.getlayers.ai/storage/v1/object/public/public/assets/lumora-e8b711fc68/hero/before.jpg';new ResizeObserver(buildCover).observe($('.lr'))}else rc.style.display='none';
+buildCover();new ResizeObserver(buildCover).observe($('.lr'));document.fonts&&document.fonts.ready.then(buildCover);if(RM)rc.style.display='none';
 if(FINE&&!RM)addEventListener('pointermove',e=>{const r=rc.getBoundingClientRect(),x=(e.clientX-r.left)*DPR,y=(e.clientY-r.top)*DPR,R=RAD*DPR;
  if(x<-R||y<-R||x>rc.width+R||y>rc.height+R){last=null;return}
  if(last){const dx=x-last[0],dy=y-last[1],dist=Math.hypot(dx,dy),st=Math.max(R*.3,1),n=Math.min(Math.ceil(dist/st),60);for(let i=1;i<=n;i++)pts.push([last[0]+dx*i/n,last[1]+dy*i/n])}else pts.push([x,y]);last=[x,y]},{passive:true});
