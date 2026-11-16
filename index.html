@@ -60,13 +60,13 @@ body:not(.ready) nav.top{transform:translateY(-100%)}
 .hero-pin{position:sticky;top:0;z-index:0}
 .hero-in{transform-origin:center top}
 .hero{position:relative;isolation:isolate;min-height:100lvh;background:#c9c9c9;overflow:hidden;display:flex;border-radius:0 0 2rem 2rem}
-.lr{position:absolute;inset:0;z-index:0}.lr img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.lr{position:absolute;inset:0;z-index:0}.lr img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:74% 20%}
 .vig{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(to bottom,rgba(255,255,255,.35),transparent,rgba(255,255,255,.35))}
 .hero canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 
 .shade{position:absolute;inset:0;background:var(--ink);opacity:0;pointer-events:none;z-index:40}
 .wm{position:absolute;left:0;right:0;bottom:-.12em;z-index:1;text-align:center;font:700 clamp(120px,27vw,420px)/.8 var(--fd);color:rgba(9,10,11,.045);letter-spacing:-.01em;user-select:none;pointer-events:none}
-.hgrid{position:relative;z-index:5;width:100%;display:grid;grid-template-columns:minmax(0,1fr) 260px;grid-template-rows:1fr auto;gap:28px 48px;padding-top:110px;padding-bottom:28px}
+.hgrid{position:relative;z-index:5;width:100%;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.78fr);grid-template-rows:1fr auto auto;gap:28px 48px;padding-top:110px;padding-bottom:28px}
 .idn{align-self:center}
 .idn .eye{color:var(--mut)}
 .hero h1{font-size:clamp(54px,9.4vw,148px);margin:14px 0 26px}
@@ -75,7 +75,8 @@ body:not(.ready) nav.top{transform:translateY(-100%)}
 .meta li{display:flex;align-items:center;gap:10px}
 .meta svg{width:16px;height:16px;flex:none;color:var(--cy)}
 .lede{font-size:17px;color:var(--mut);margin-top:24px;max-width:46ch}
-.rail{align-self:center;display:grid;gap:26px}
+.idn{grid-column:1}.rail{grid-column:1;align-self:start;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.bp{background:rgba(244,247,248,.62);backdrop-filter:blur(6px)}
 .bp{position:relative;padding:18px 20px}
 .bp>svg.c{position:absolute;width:10px;height:10px;fill:none;stroke:currentColor}
 .bp>svg.c:nth-of-type(1){top:0;right:0}.bp>svg.c:nth-of-type(2){top:0;left:0;transform:scaleX(-1)}.bp>svg.c:nth-of-type(3){bottom:0;left:0;transform:scale(-1)}.bp>svg.c:nth-of-type(4){bottom:0;right:0;transform:scaleY(-1)}
@@ -224,6 +225,7 @@ dialog button{position:fixed;top:14px;right:14px;width:46px;height:46px;border-r
 .sh,.g2,.stage,.proj,.ft .pn>.wrap{grid-template-columns:minmax(0,1fr)}
 .clock{display:none}}
 @media (max-width:700px){
+.lr::after{content:"";position:absolute;inset:0;background:rgba(244,247,248,.55)}
 nav.top .wrap{justify-content:space-between;row-gap:4px}.clock{display:block}nav.top ul{order:3;width:100%;margin:0;gap:16px;flex-wrap:nowrap;overflow-x:auto}nav.top ul a{font-size:12px;padding:6px 0;white-space:nowrap}
 .foot{grid-template-columns:minmax(0,1fr);justify-items:start}.soc{justify-content:flex-start}
 .rail{grid-template-columns:minmax(0,1fr)}
@@ -251,7 +253,7 @@ nav.top .wrap{justify-content:space-between;row-gap:4px}.clock{display:block}nav
 <div class="stack">
 <div class="hero-pin"><div class="hero-in">
 <header class="hero" id="top">
-<div class="lr" aria-hidden="true"><canvas id="lb0"></canvas><canvas id="rv"></canvas></div><div class="vig"></div>
+<div class="lr" aria-hidden="true"><img src="img/hero-base.jpg" alt="" fetchpriority="high"><canvas id="rv"></canvas></div><div class="vig"></div>
 <div class="wm" aria-hidden="true">ISOML</div>
 <div class="wrap pad hgrid">
 <div class="idn">
@@ -271,7 +273,7 @@ nav.top .wrap{justify-content:space-between;row-gap:4px}.clock{display:block}nav
 <div class="eye">Open to</div><dl><dt>Cybersecurity roles</dt><dd>IoT security</dd><dd>Web &amp; desktop projects</dd></dl><a href="#contact">Get in touch →</a></div>
 </div>
 <div class="foot h-rv rv">
-<div class="hint"><i></i><span>Move your cursor to scan the network</span></div>
+<div class="hint"><i></i><span>Move your cursor to run a face scan</span></div>
 <a class="cta" href="#work"><svg class="f" viewBox="0 0 220 50" preserveAspectRatio="none" aria-hidden="true"><path class="b" d="M220 42L212.9 50H0V0H220V42Z"/><path class="fl" d="M220 42L212.9 50H0V0H220V42Z"/><path class="rg" d="M220 42L212.9 50H0V0H220V42Z"/></svg><span>View my work</span><svg class="ar" viewBox="0 0 13.7 10.7" aria-hidden="true"><path d="M0 5.35H13M8 10.35L13 5.35 8 .35"/></svg></a>
 <div class="soc"><a href="https://wa.me/213656821414" aria-label="WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" d="M12 2.6a9.4 9.4 0 0 0-8.1 14.2L2.6 21.4l4.7-1.2A9.4 9.4 0 1 0 12 2.6Z"/><path fill="currentColor" d="M8.7 7.3c.3-.5.6-.5.9-.5h.5c.2 0 .4.1.5.4l.7 1.7c.1.3 0 .5-.1.7l-.5.6c-.1.2-.2.4 0 .6.6 1.1 1.6 2.1 2.8 2.7.2.1.4.1.6-.1l.6-.7c.2-.2.4-.2.6-.1l1.7.8c.2.1.4.3.4.5 0 .6-.2 1.3-.7 1.7-.6.5-1.5.7-2.4.4-1.6-.5-3-1.4-4.1-2.6-1-1.1-1.8-2.3-2.1-3.6-.2-.9 0-1.8.5-2.3Z"/></svg></a><a href="https://t.me/+213656821414" aria-label="Telegram"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.4 3.6 2.9 10.8c-.9.4-.9 1.6.1 1.9l4.5 1.4 1.8 5.5c.2.7 1.1.9 1.6.4l2.6-2.4 4.8 3.5c.6.4 1.4.1 1.6-.6l3.1-15.5c.2-.9-.7-1.6-1.6-1.4Zm-3.9 4.1-7.6 6.9-.4 3.3-1.3-4.2 9.3-6Z"/></svg></a><a href="https://github.com/ISOML" aria-label="GitHub"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .5a11.5 11.5 0 0 0-3.6 22.4c.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.7.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.2c0 .3.2.7.8.6A11.5 11.5 0 0 0 12 .5Z"/></svg></a><a href="mailto:ovicislam03@gmail.com" aria-label="Email"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.8" y="5" width="18.4" height="14" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m3.5 6 8.5 7 8.5-7" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a></div>
 </div>
@@ -396,54 +398,12 @@ const addBG=(c,col,cells,el)=>{const o={c,col,cells,el:el||c,vis:false,s:fit(c)}
 addBG($('#pc'),'rgba(9,10,11,.07)',80);addBG($('#fc'),'rgba(255,255,255,.09)',80,$('.ft'));
 /* ---------- hero scan reveal (liquid brush) ---------- */
 const rc=$('#rv');let RS=fit(rc),cover=null,brush=null,pts=[],last=null,idle=999;const RAD=143;
-/* emblem: an original shield + padlock + circuit artwork, drawn in two states */
-const emblem=(g,W,H,rev)=>{
- const mono='"Space Grotesk",monospace';let sd=11;const rnd=()=>(sd=(sd*16807)%2147483647)/2147483647;
- const bg=g.createLinearGradient(0,0,W,H);
- if(rev){bg.addColorStop(0,'#04161a');bg.addColorStop(1,'#020507')}else{bg.addColorStop(0,'#f4f7f8');bg.addColorStop(1,'#e3eaed')}
- g.fillStyle=bg;g.fillRect(0,0,W,H);
- const wide=W>900,cx=wide?W*.64:W*.5,cy=H*.53,S=Math.min(H*.86,W*(wide?.62:.95));
- /* background texture: dot grid (calm) or hex dump (revealed) */
- if(rev){const gl=g.createRadialGradient(cx,cy,0,cx,cy,S*.9);gl.addColorStop(0,'rgba(2,210,227,.28)');gl.addColorStop(1,'rgba(2,210,227,0)');g.fillStyle=gl;g.fillRect(0,0,W,H);
-  g.font=`${Math.max(10,S*.017)|0}px ${mono}`;const hx='0123456789ABCDEF';
-  for(let y=14;y<H;y+=Math.max(16,S*.03))for(let x=8;x<W;x+=Math.max(34,S*.06)){if(rnd()<.45)continue;g.fillStyle=`rgba(2,210,227,${.08+rnd()*.22})`;g.fillText(hx[(rnd()*16)|0]+hx[(rnd()*16)|0],x,y)}
-  g.fillStyle='rgba(0,0,0,.18)';for(let y=0;y<H;y+=3)g.fillRect(0,y,W,1)}
- else{g.fillStyle='rgba(9,10,11,.07)';for(let y=12;y<H;y+=22)for(let x=12;x<W;x+=22){g.beginPath();g.arc(x,y,1,0,7);g.fill()}}
- const shield=(k)=>{const s=S*k,w=s*.42,y0=cy-s*.5,y1=cy+s*.55;g.beginPath();g.moveTo(cx,y0);
-  g.bezierCurveTo(cx+w*.5,y0+s*.09,cx+w*.85,y0+s*.05,cx+w,y0+s*.02);g.lineTo(cx+w,cy+s*.05);g.bezierCurveTo(cx+w,cy+s*.33,cx+w*.45,cy+s*.47,cx,y1);
-  g.bezierCurveTo(cx-w*.45,cy+s*.47,cx-w,cy+s*.33,cx-w,cy+s*.05);g.lineTo(cx-w,y0+s*.02);g.bezierCurveTo(cx-w*.85,y0+s*.05,cx-w*.5,y0+s*.09,cx,y0);g.closePath()};
- /* circuit traces leaving the shield */
- sd=29;const tr=[];for(let i=0;i<22;i++){const side=i%2?1:-1,yy=cy-S*.36+rnd()*S*.78,x0=cx+side*S*.40*(1-Math.max(0,(yy-cy)/(S*.6))**2);
-  const pts=[[x0,yy]];let x=x0,y=yy;for(let k=0;k<3;k++){x+=side*(S*.06+rnd()*S*.16);pts.push([x,y]);const d=(rnd()-.5)*S*.16;x+=side*Math.abs(d);y+=d;pts.push([x,y])}tr.push(pts)}
- g.lineCap='round';g.lineJoin='round';
- tr.forEach((pts,i)=>{const bad=rev&&i%7==3;g.strokeStyle=rev?(bad?'rgba(255,77,67,.9)':'rgba(2,210,227,.85)'):'rgba(9,10,11,.14)';g.lineWidth=rev?2:1.4;
-  if(rev){g.shadowColor=bad?'#ff4d43':'#02d2e3';g.shadowBlur=12}g.beginPath();pts.forEach((p,k)=>k?g.lineTo(...p):g.moveTo(...p));g.stroke();g.shadowBlur=0;
-  const e=pts[pts.length-1];g.beginPath();g.arc(e[0],e[1],rev?4:3,0,7);g.fillStyle=rev?(bad?'#ff4d43':'#02d2e3'):'rgba(9,10,11,.22)';g.fill()});
- /* shield rings */
- [1,.86,.72].forEach((k,i)=>{shield(k);g.setLineDash(i==2?[S*.012,S*.012]:[]);
-  if(rev){g.strokeStyle=i==0?'#02d2e3':'rgba(2,210,227,.6)';g.lineWidth=i==0?S*.012:S*.005;g.shadowColor='#02d2e3';g.shadowBlur=i==0?28:10}
-  else{g.strokeStyle=i==0?'rgba(9,10,11,.16)':'rgba(9,10,11,.1)';g.lineWidth=i==0?S*.012:S*.005}
-  g.stroke();g.shadowBlur=0});g.setLineDash([]);
- if(rev){shield(.86);g.fillStyle='rgba(2,210,227,.07)';g.fill()}
- /* padlock */
- const lw=S*.26,lh=S*.2,lx=cx-lw/2,ly=cy-S*.02,r=S*.09,lift=rev?S*.07:0;
- g.lineWidth=S*.03;g.strokeStyle=rev?'#e9fcff':'rgba(9,10,11,.2)';if(rev){g.shadowColor='#02d2e3';g.shadowBlur=20}
- g.beginPath();g.moveTo(cx-r,ly-(rev?0:0));g.lineTo(cx-r,ly-S*.03-lift);g.arc(cx,ly-S*.03-lift,r,Math.PI,0);g.lineTo(cx+r,ly-(rev?S*.06:0)-lift*(rev?.3:0));g.stroke();g.shadowBlur=0;
- g.beginPath();g.roundRect?g.roundRect(lx,ly,lw,lh,S*.02):g.rect(lx,ly,lw,lh);g.fillStyle=rev?'#02d2e3':'rgba(9,10,11,.16)';g.fill();
- g.fillStyle=rev?'#03161a':'#eef3f5';g.beginPath();g.arc(cx,ly+lh*.42,S*.022,0,7);g.fill();g.fillRect(cx-S*.008,ly+lh*.42,S*.016,lh*.34);
- /* revealed extras: breach crack + labels */
- if(rev){g.strokeStyle='#ff4d43';g.lineWidth=S*.006;g.shadowColor='#ff4d43';g.shadowBlur=16;g.beginPath();
-  [[-.30,-.40],[-.18,-.22],[-.24,-.12],[-.08,.04],[-.14,.14],[.02,.34],[-.02,.5]].forEach(([dx,dy],k)=>{const X=cx+dx*S,Y=cy+dy*S;k?g.lineTo(X,Y):g.moveTo(X,Y)});g.stroke();g.shadowBlur=0;
-  const tags=['AES-256','TLS 1.3','MQTT :1883','AE-GRU','IDS ONLINE','UDP FLOOD','99.72%','PORT 23 CLOSED','C2 BLOCKED','ZERO TRUST'];
-  g.font=`500 ${Math.max(11,S*.02)|0}px ${mono}`;tr.forEach((pts,i)=>{if(i>=tags.length)return;const e=pts[pts.length-1],t=tags[i],bad=i%7==3,tw=g.measureText(t).width,side=i%2?1:-1,tx=side>0?e[0]+10:e[0]-10-tw;
-   g.fillStyle='rgba(2,8,10,.8)';g.fillRect(tx-6,e[1]-S*.02,tw+12,S*.032);g.strokeStyle=bad?'#ff4d43':'rgba(2,210,227,.6)';g.lineWidth=1;g.strokeRect(tx-6,e[1]-S*.02,tw+12,S*.032);
-   g.fillStyle=bad?'#ff4d43':'#bff7fd';g.fillText(t,tx,e[1]+S*.004)});
-  g.font=`700 ${Math.max(12,S*.028)|0}px ${mono}`;g.fillStyle='#02d2e3';g.textAlign='center';g.fillText('ACCESS · VERIFIED',cx,cy+S*.62);g.textAlign='start'}};
-const lb0=$('#lb0');
-const buildCover=()=>{RS=fit(rc);const b=fit(lb0);emblem(b.x,b.W,b.H,false);
- const cw=rc.width,ch=rc.height;cover=document.createElement('canvas');cover.width=cw;cover.height=ch;const g=cover.getContext('2d');g.scale(DPR,DPR);emblem(g,cw/DPR,ch/DPR,true);
+/* photo cover: same crop as the base <img> (object-position 74% 20%) so both layers line up */
+const revImg=new Image();const PX=.74,PY=.2;
+const buildCover=()=>{RS=fit(rc);if(!revImg.naturalWidth)return;const cw=rc.width,ch=rc.height;cover=document.createElement('canvas');cover.width=cw;cover.height=ch;
+ const g=cover.getContext('2d'),iw=revImg.naturalWidth,ih=revImg.naturalHeight,sc=Math.max(cw/iw,ch/ih),dw=iw*sc,dh=ih*sc;g.drawImage(revImg,(cw-dw)*PX,(ch-dh)*PY,dw,dh);
  const d=Math.ceil(RAD*DPR*2);brush=document.createElement('canvas');brush.width=brush.height=d};
-buildCover();new ResizeObserver(buildCover).observe($('.lr'));document.fonts&&document.fonts.ready.then(buildCover);if(RM)rc.style.display='none';
+if(!RM){revImg.onload=buildCover;revImg.src='img/hero-reveal.jpg';new ResizeObserver(buildCover).observe($('.lr'))}else rc.style.display='none';
 if(FINE&&!RM)addEventListener('pointermove',e=>{const r=rc.getBoundingClientRect(),x=(e.clientX-r.left)*DPR,y=(e.clientY-r.top)*DPR,R=RAD*DPR;
  if(x<-R||y<-R||x>rc.width+R||y>rc.height+R){last=null;return}
  if(last){const dx=x-last[0],dy=y-last[1],dist=Math.hypot(dx,dy),st=Math.max(R*.3,1),n=Math.min(Math.ceil(dist/st),60);for(let i=1;i<=n;i++)pts.push([last[0]+dx*i/n,last[1]+dy*i/n])}else pts.push([x,y]);last=[x,y]},{passive:true});
